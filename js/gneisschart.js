@@ -1804,6 +1804,7 @@ function Gneiss(config)
  							function(d,i) {return g.xAxis().scale(i)}
  					)
                                         .attr("y", function(d,i) {yAxisIndex = d3.select(this.parentNode).data()[0].axis; return (d || d ===0 ? (g.yAxis()[yAxisIndex]).scale(d) : -100)-4})
+            
                             
                             
                 
