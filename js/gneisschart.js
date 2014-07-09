@@ -1792,6 +1792,20 @@ function Gneiss(config)
 				
 				columnRects.exit().remove()
 
+                               //add labels to columns
+ 				columnGroups.selectAll("text")
+ 					.data(function(d){return d.data})
+ 					.enter()
+ 					.append("text")
+ 					.text(function(d){return d})
+ 					.attr("text-anchor","middle")
+ 					.attr("x",g.xAxis().type =="date" ? 
+ 							function(d,i) {return g.xAxis().scale(g.xAxisRef()[0].data[i])}:
+ 							function(d,i) {return g.xAxis().scale(i)}
+ 					)
+                .attr("y", function(d,i) {yAxisIndex = d3.select(this.parentNode).data()[0].axis; return (d || d ===0 ? (g.yAxis()[yAxisIndex]).scale(d) : -100)-4})
+                
+
 				//add lines
 				lineSeries = g.seriesContainer.selectAll("path")
 					.data(sbt.line)
