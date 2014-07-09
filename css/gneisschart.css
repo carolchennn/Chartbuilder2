@@ -62,16 +62,14 @@ svg .axis path {
 
 svg .axis text {
 	font-family: 'Franklin Gothic Demi Cond', Helvetica, sans-serif;
-	text-transform: uppercase;
 }
 
 svg .legendItem text {
 	font-family: 'Franklin Gothic Demi Cond', Helvetica, sans-serif;
-	text-transform: uppercase;
 }
 
 svg text.metaText {
-	font-family: 'Franklin Gothic Book', Helvetica, sans-serif;
+	font-family: 'Franklin Gothic Demi Cond', Helvetica, sans-serif;
 	font-size:  10px;
 	text-rendering:   optimizeLegibility;
 	fill:  #999999;
@@ -79,7 +77,6 @@ svg text.metaText {
 
 svg text.bargridLabel {
 	font-family: 'Franklin Gothic Demi Cond', Helvetica, sans-serif;
-	text-transform: uppercase;
 }
 
 svg text.barLabel {
@@ -99,10 +96,9 @@ svg .seriesScatter circle {
 	stroke:#fff;
 	stroke-width:1;
 }
-	
+
 #titleLine {
 	font-family: 'Franklin Gothic Demi Cond', Helvetica, sans-serif;
-	font-weight: bolder;
 	font-size:16px;
 	fill: #666666;
 }
