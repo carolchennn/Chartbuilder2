@@ -3,12 +3,14 @@
 
 var chart;
 ChartBuilder = {
-	allColors: ["BF0053","FF70B0","E15D98","C44B81","A63869","882551","6B133A","4D0022",
-						"BF600A","FFC07E","E1A76A","C48D55","A67341","885A2D","6B4118","4D2704",
-						"BFAA00","FFF270","E1D55D","C4B84B","A69C38","887F25","6B6213","4D4500",
-						"00BFA5","70FFF7","5DE1D9","4BC4BC","38A69E","258880","136B63","004D45",
-						"006DBF","70B8FF","5DA1E1","4B89C4","3871A6","255A88","13436B","002B4D",
-						"9300BF","E770FF","CB5DE1","AE4BC4","9238A6","752588","59136B","3C004D"],
+	allColors: ["BF0053","006DBF","BF600A","BFAA00","00BFA5","9300BF",
+	            "FF70B0","70B8FF","FFC07E","FFF270","70FFF7","E770FF",
+	            "E15D98","5DA1E1","E1A76A","E1D55D","5DE1D9","CB5DE1",
+	            "C44B81","4B89C4","C48D55","C4B84B","4BC4BC","AE4BC4",
+	            "A63869","3871A6","A67341","A69C38","38A69E","9238A6",
+	            "882551","255A88","885A2D","887F25","258880","752588",
+	            "6B133A","13436B","6B4118","6B6213","136B63","59136B",
+	            "4D0022","002B4D","4D2704","4D4500","004D45","3C004D"],
 	curRaw: "",
 	advancedMode: false,
 	separators: {},
@@ -795,12 +797,14 @@ ChartBuilder = {
 // Create default config for chartbuilder
 ChartBuilder.getDefaultConfig = function() {
   var chartConfig = {};
-  chartConfig.colors = ["#BF0053","#FF70B0","#E15D98","#C44B81","#A63869","#882551","#6B133A","#4D0022",
-						"#BF600A","#FFC07E","#E1A76A","#C48D55","#A67341","#885A2D","#6B4118","#4D2704",
-						"#BFAA00","#FFF270","#E1D55D","#C4B84B","#A69C38","#887F25","#6B6213","#4D4500",
-						"#00BFA5","#70FFF7","#5DE1D9","#4BC4BC","#38A69E","#258880","#136B63","#004D45",
-						"#006DBF","#70B8FF","#5DA1E1","#4B89C4","#3871A6","#255A88","#13436B","#002B4D",
-						"#9300BF","#E770FF","#CB5DE1","#AE4BC4","#9238A6","#752588","#59136B","#3C004D"];
+  chartConfig.colors = ["BF0053","006DBF","BF600A","BFAA00","00BFA5","9300BF",
+	            "FF70B0","70B8FF","FFC07E","FFF270","70FFF7","E770FF",
+	            "E15D98","5DA1E1","E1A76A","E1D55D","5DE1D9","CB5DE1",
+	            "C44B81","4B89C4","C48D55","C4B84B","4BC4BC","AE4BC4",
+	            "A63869","3871A6","A67341","A69C38","38A69E","9238A6",
+	            "882551","255A88","885A2D","887F25","258880","752588",
+	            "6B133A","13436B","6B4118","6B6213","136B63","59136B",
+	            "4D0022","002B4D","4D2704","4D4500","004D45","3C004D"];
   chartConfig.creditline = "Made with Chartbuilder";
   
   return chartConfig;
