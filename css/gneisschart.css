@@ -83,6 +83,10 @@ svg text.barLabel {
 	font-family: 'Franklin Gothic Demi Cond', Helvetica, sans-serif;
 }
 
+svg text.columnLabel {
+	font-family: 'Franklin Gothic Demi Cond', Helvetica, sans-serif;
+}
+
 /*Default styling of series*/
 
 svg path.seriesLine {
