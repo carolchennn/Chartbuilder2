@@ -1598,7 +1598,7 @@ function Gneiss(config)
 					.data(sbt.bargrid)
 					.attr("fill",function(d,i){return d.color? d.color : colors[i+sbt.line.length]})
 				
-				var seriesColumnsB = columnGroupsB.enter()
+				var seriesColumns = columnGroups.enter()
 					.append("g") 
 						.attr("class","seriesColumn")
 						.attr("fill",function(d,i){return d.color? d.color : colors[i+g.series().length]})
