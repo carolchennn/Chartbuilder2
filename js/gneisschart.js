@@ -1594,7 +1594,7 @@ function Gneiss(config)
 			
 			if(g.isBargrid()) {
 				//add bars to chart
-				columnGroupsB = g.seriesContainer.selectAll("g.seriesColumn")
+				columnGroups = g.seriesContainer.selectAll("g.seriesColumn")
 					.data(sbt.bargrid)
 					.attr("fill",function(d,i){return d.color? d.color : colors[i+sbt.line.length]})
 				
