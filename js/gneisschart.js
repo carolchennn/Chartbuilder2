@@ -1502,10 +1502,8 @@ function Gneiss(config)
 				.attr("id","seriesContainer");				
 				
 			lineSeries = g.seriesContainer.selectAll("path");
-			//for column
 			columnSeries = g.seriesContainer.selectAll("g.seriesColumn");
-			//for bar
-			columnSeries = g.seriesContainer.selectAll("g.seriesColumn");
+
 			var columnGroups;
 			var columnRects;
 			var lineSeriesDots = g.seriesContainer.selectAll("g.lineSeriesDots");
