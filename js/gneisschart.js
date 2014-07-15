@@ -1789,6 +1789,7 @@ function Gneiss(config)
                           .data(function(d){return d.data})
                           .text(function(d){return d})
                           .attr("text-anchor","middle")
+                          .attr("class","columnLabel")
                           .attr("x",g.xAxis().type =="date" ?
                                 function(d,i) {return g.xAxis().scale(g.xAxisRef()[0].data[i])}:
                                 function(d,i) {return g.xAxis().scale(i)}
@@ -1811,6 +1812,7 @@ function Gneiss(config)
  					.append("text")
  					.text(function(d){return d})
  					.attr("text-anchor","middle")
+ 					.attr("class","columnLabel")
  					.attr("x",g.xAxis().type =="date" ? 
  							function(d,i) {return g.xAxis().scale(g.xAxisRef()[0].data[i])}:
  							function(d,i) {return g.xAxis().scale(i)}
