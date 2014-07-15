@@ -1425,9 +1425,9 @@ function Gneiss(config)
 		var g = this;
 		var x = g.xAxis();
 		var data = g.xAxisRef()[0].data;
-		var numColumnSeries = g.seriesByType().column.length;
+		var numColumnSeriesB = g.seriesByType().column.length;
 		
-		if(numColumnSeries === 0) {
+		if(numColumnSeriesB === 0) {
 			return this;
 		}
 		
@@ -1455,7 +1455,7 @@ function Gneiss(config)
 		// Determine the proper column width
 		var effectiveChartWidth = g.width() - g.padding().right - g.padding().left - g.axisBarGap();
 
-		var columnWidth = Math.floor((effectiveChartWidth / numDataPoints) / numColumnSeries);
+		var columnWidth = Math.floor((effectiveChartWidth / numDataPoints) / numColumnSeriesB);
 		columnWidth = columnWidth - g.columnGap()
 		// Make sure the columns are at least a pixel wide
 		columnWidth = Math.max(columnWidth, 1);
@@ -1463,7 +1463,7 @@ function Gneiss(config)
 		// Make sure columns are not wider than the specified portion of the available width
 		columnWidth = Math.min(columnWidth, effectiveChartWidth * g.maxColumnWidth()/100);
 		g.columnWidth(columnWidth);
-		g.columnGroupWidth((columnWidth + g.columnGap()) * numColumnSeries);
+		g.columnGroupWidth((columnWidth + g.columnGap()) * numColumnSeriesB);
 		g.columnGroupShift(columnWidth + g.columnGap()); 
 
 		return this;
@@ -1502,7 +1502,11 @@ function Gneiss(config)
 				.attr("id","seriesContainer");				
 				
 			lineSeries = g.seriesContainer.selectAll("path");
+			
+			// for bar
 			columnSeries = g.seriesContainer.selectAll("g.seriesColumn");
+			//for column
+			columnSeriesB = g.seriesContainer.selectAll("g.seriesColumnB");
 			var columnGroups;
 			var columnRects;
 			var lineSeriesDots = g.seriesContainer.selectAll("g.lineSeriesDots");
@@ -1513,10 +1517,10 @@ function Gneiss(config)
 				.attr("id","legendItemContainer");
 				
 				//add columns to chart
-				columnGroups = columnSeries.data(sbt.column)
+				columnGroups = columnSeriesB.data(sbt.column)
 					.enter()
 					.append("g") 
-						.attr("class","seriesColumn seriesGroup")
+						.attr("class","seriesColumnB seriesGroup")
 						.attr("fill",function(d,i){return d.color? d.color : colors[i+sbt.line.length]})
 						.attr("transform",function(d,i){return "translate("+(i*columnGroupShift - (columnGroupShift * (sbt.column.length-1)/2))+",0)"})
 						
@@ -1586,6 +1590,7 @@ function Gneiss(config)
 			
 			lineSeries = g.seriesContainer.selectAll("path");
 			columnSeries = g.seriesContainer.selectAll("g.seriesColumn")
+			columnSeriesB = g.seriesContainer.selectAll("g.seriesColumnB")
 			scatterSeries = g.seriesContainer.selectAll("g.seriesScatter")
 			lineSeriesDotGroups = g.seriesContainer.selectAll("g.lineSeriesDots")
 			var columnGroups
@@ -1752,7 +1757,7 @@ function Gneiss(config)
 				//Not a bargrid
 				
 				//add columns to chart
-				columnGroups = g.seriesContainer.selectAll("g.seriesColumn")
+				columnGroups = g.seriesContainer.selectAll("g.seriesColumnB")
 					.data(sbt.column)
 					.attr("fill",function(d,i){return d.color? d.color : colors[i+sbt.line.length]})
 				
@@ -1764,11 +1769,11 @@ function Gneiss(config)
 				
 				columnGroups.enter()
 					.append("g") 
-						.attr("class","seriesColumn")
+						.attr("class","seriesColumnB")
 						.attr("fill",function(d,i){return d.color? d.color : colors[i+sbt.line.length]})
 						.attr("transform",function(d,i){return "translate("+(i*columnGroupShift - (columnGroupShift * (sbt.column.length-1)/2))+",0)"})
 					
-				columnSeries.transition()
+				columnSeriesB.transition()
 					.duration(500)
 					.attr("transform",function(d,i){return "translate("+(i*columnGroupShift - (columnGroupShift * (sbt.column.length-1)/2))+",0)"})
 			
