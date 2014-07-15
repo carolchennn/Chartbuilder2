@@ -371,4 +371,11 @@ div.colorPicker_hexWrap {
 	display: none;
 }
 
+.seriesColumn text{
+	display:none;
+}
+
+.bargridLabel {
+	display:block;
+}
 
