@@ -1,11 +1,16 @@
+//test change
+
+
 var chart;
 ChartBuilder = {
-	allColors: ["BF0053","FF70B0","E15D98","C44B81","A63869","882551","6B133A","4D0022",
-						"BF600A","FFC07E","E1A76A","C48D55","A67341","885A2D","6B4118","4D2704",
-						"BFAA00","FFF270","E1D55D","C4B84B","A69C38","887F25","6B6213","4D4500",
-						"00BFA5","70FFF7","5DE1D9","4BC4BC","38A69E","258880","136B63","004D45",
-						"006DBF","70B8FF","5DA1E1","4B89C4","3871A6","255A88","13436B","002B4D",
-						"9300BF","E770FF","CB5DE1","AE4BC4","9238A6","752588","59136B","3C004D"],
+	allColors: ["BF0053","006DBF","BF600A","BFAA00","00BFA5","9300BF",
+	            "FF70B0","70B8FF","FFC07E","FFF270","70FFF7","E770FF",
+	            "E15D98","5DA1E1","E1A76A","E1D55D","5DE1D9","CB5DE1",
+	            "C44B81","4B89C4","C48D55","C4B84B","4BC4BC","AE4BC4",
+	            "A63869","3871A6","A67341","A69C38","38A69E","9238A6",
+	            "882551","255A88","885A2D","887F25","258880","752588",
+	            "6B133A","13436B","6B4118","6B6213","136B63","59136B",
+	            "4D0022","002B4D","4D2704","4D4500","004D45","3C004D"],
 	curRaw: "",
 	advancedMode: false,
 	separators: {},
@@ -23,7 +28,7 @@ ChartBuilder = {
 		var delim = String.fromCharCode(9);
 
 		if (delim == this.separators.thousands || delim == this.separators.decimal) {
-			console.warn("Your text deliminator is the same as your locale's thousands separator or decimal separator");
+			console.warn("Your text deliminator is the same as your locale's thousands separator or decimal separator")
 		}
 
 		// Trim leading and trailing spaces from rows and split
@@ -292,15 +297,24 @@ ChartBuilder = {
 
 		return output;
 	},
+    
+    
+    
 	createChartImage: function() {
-		// Create PNG image
-		var canvas = document.getElementById("canvas");
+        var callback_flag = false;
+        console.log("test");
+        
+        var canvas = document.getElementById("canvas");
 		canvas.width = $("#chartContainer").width() * 2;
-		canvas.height = $("#chartContainer").height() *2;
+		canvas.height = $("#chartbigContainer").height()* 2 + 65;
+        var canvasContext = canvas.getContext("2d");
 
-		var canvasContext = canvas.getContext("2d");
-		var svg = $.trim(document.getElementById("chartContainer").innerHTML);
-		canvasContext.drawSvg(svg,0,0);
+        var svg = $.trim(document.getElementById("chartContainer").innerHTML);
+        var svg1 = $.trim(document.getElementById("chartContainer").innerHTML);
+        var logo = document.getElementById("ALMlogo");
+        canvasContext.drawSvg(svg,0,0);
+        var height = $("#chartContainer").height()* 2
+        canvasContext.drawImage(logo,0,height);
 
 
 		var filename = [];
@@ -314,31 +328,30 @@ ChartBuilder = {
 
 		filename = filename.join("-").replace(/[^\w\d]+/gi, '-');
 
-
-		$("#downloadImageLink").attr("href",canvas.toDataURL("png"))
-			.attr("download",function(){ return filename + "_chartbuilder.png";
-			});
-
-
 		var svgContent = this.createSVGContent(document.getElementById("chart"));
 
+        $("#downloadImageLink").attr("href",canvas.toDataURL("png"))
+        .attr("download",function(){ return filename + "_chartbuilder.png";
+              });
+
 		$("#downloadSVGLink").attr("href","data:text/svg,"+ svgContent.source[0])
-			.attr("download",function(){ return filename + "_chartbuilder.svg";});
-
-			var icon = this.setFavicon();
-			this.storeLocalChart(filename);
-
+        .attr("download",function(){ return filename + "_chartbuilder.svg";});
+        
+        
+        var icon = this.setFavicon();
+        this.storeLocalChart(filename);
+        
 		if(!(/Apple/).test(navigator.vendor)) {
 			//blobs dont work in Safari so don't use that method
-
+            
 			var link = document.getElementById('downloadImageLink');
 			var base64 = canvas.toDataURL("png").split(",")[1];
 			var bytes = window.atob(base64);
 			var ui8a = new Uint8Array(bytes.length);
-
+            
 			for (var i = 0; i < bytes.length; i++)
 				ui8a[i] = bytes[i].charCodeAt(0);
-
+            
 			var blob = new Blob([ui8a], { type: 'image/png' });
 			var url = URL.createObjectURL(blob);
 			link.href = url;
@@ -347,9 +360,11 @@ ChartBuilder = {
 			blob = new Blob(svgContent.source, { type: '"text\/xml"' });
 			url = URL.createObjectURL(blob);
 			link.href = url;
-		}
-
-	},
+        }
+           },
+    
+    
+    
 	createSVGContent: function(svg) {
 		/*
 			Copyright (c) 2013 The New York Times
@@ -395,6 +410,9 @@ ChartBuilder = {
 		}
 
 		var source = (new XMLSerializer()).serializeToString(svg).replace('</style>', '<![CDATA[' + styles + ']]></style>');
+
+        
+        
 
 		return {svg: svg, source: [doctype + source]};
 	},
@@ -485,17 +503,7 @@ ChartBuilder = {
 					}
 				}
 
-				if(val == "bargrid") {
-					//set the chart type to bargrid
-					chart.isBargrid(true)
-
-					chart.setPadding();
-					ChartBuilder.setChartArea();
-					chart.setXScales()
-						.resize();
-					ChartBuilder.redraw();
-				}
-
+				var hasBargrid = false;
 				chart.setPadding();
 				ChartBuilder.setChartArea();
 				chart.setXScales()
@@ -619,9 +627,15 @@ ChartBuilder = {
 		}
 	},
 	setChartArea: function() {
-		$("#chartContainer").removeAttr("height").css("height","");
+		var hasBargrid = false;
+		for (var i = chart.series().length - 1; i >= 0; i--){
+			if(chart.series()[i].type == "bargrid") {
+				hasBargrid = true;
+				break;
+			}
+		}
 
-		if(chart.isBargrid()) {
+		if(hasBargrid) {
 			$("#chartContainer").css("height",
 				chart.series()[0].data.length * (chart.bargridBarThickness() + 2) + //CHANGE - MAGIC NUMBER
 				chart.padding().top +
@@ -629,13 +643,8 @@ ChartBuilder = {
 				);
 		}
 		else {
-			//if there is a multiline footer increase the chart height to accomodate it
-			if(chart.footerElement()[0][0].getBBox().height > Math.max(chart.creditElement()[0][0].getBBox().height,chart.sourceElement()[0][0].getBBox().height)){
-				$("#chartContainer").css("height", $("#chartContainer").height() + chart.footerElement()[0][0].getBBox().height - chart.creditElement()[0][0].getBBox().height);
-			}
+			$("#chartContainer").removeAttr("height").css("height","");
 		}
-
-
 	},
 	makeLegendAdjustable: function() {
 
@@ -788,12 +797,14 @@ ChartBuilder = {
 // Create default config for chartbuilder
 ChartBuilder.getDefaultConfig = function() {
   var chartConfig = {};
-  chartConfig.colors = ["#BF0053","#FF70B0","#E15D98","#C44B81","#A63869","#882551","#6B133A","#4D0022",
-						"#BF600A","#FFC07E","#E1A76A","#C48D55","#A67341","#885A2D","#6B4118","#4D2704",
-						"#BFAA00","#FFF270","#E1D55D","#C4B84B","#A69C38","#887F25","#6B6213","#4D4500",
-						"#00BFA5","#70FFF7","#5DE1D9","#4BC4BC","#38A69E","#258880","#136B63","#004D45",
-						"#006DBF","#70B8FF","#5DA1E1","#4B89C4","#3871A6","#255A88","#13436B","#002B4D",
-						"#9300BF","#E770FF","#CB5DE1","#AE4BC4","#9238A6","#752588","#59136B","#3C004D"];
+  chartConfig.colors = ["BF0053","006DBF","BF600A","BFAA00","00BFA5","9300BF",
+	            "FF70B0","70B8FF","FFC07E","FFF270","70FFF7","E770FF",
+	            "E15D98","5DA1E1","E1A76A","E1D55D","5DE1D9","CB5DE1",
+	            "C44B81","4B89C4","C48D55","C4B84B","4BC4BC","AE4BC4",
+	            "A63869","3871A6","A67341","A69C38","38A69E","9238A6",
+	            "882551","255A88","885A2D","887F25","258880","752588",
+	            "6B133A","13436B","6B4118","6B6213","136B63","59136B",
+	            "4D0022","002B4D","4D2704","4D4500","004D45","3C004D"];
   chartConfig.creditline = "Made with Chartbuilder";
   
   return chartConfig;
@@ -851,12 +862,33 @@ ChartBuilder.start = function(config) {
 			.append("option")
 			.text(function(d){return d.name?d.name:"Untitled Chart";});
 
-
 	$("#createImageButton").click(function() {
 		ChartBuilder.inlineAllStyles();
 
 		if($("#downloadLinksDiv").hasClass("hide")) {
-			ChartBuilder.createChartImage();
+                                  
+                                  
+                                  html2canvas(document.getElementById("chartbigContainer"), {
+                                              onrendered: function(tempcanvas) {
+                                              var can = document.createElement('canvas');
+                                              can.width = $("#chartbigContainer").width() * 2;
+                                              can.height = $("#chartbigContainer").height() * 4;
+                                              var ctx = can.getContext('2d');
+                                              var framecontent = tempcanvas.getContext("2d");
+                                              
+                                              var canvas1 = document.getElementById("canvas");
+                                              canvas1.width = $("#chartContainer").width() * 2;
+                                              canvas1.height = $("#chartContainer").height() *4;
+                                              var canvasContext1 = canvas1.getContext("2d");
+                                            
+                                              console.log("callback");
+                                              callback_flag = true;
+                                              
+                                              ChartBuilder.createChartImage(); // this is where shit happened
+                                                }
+                                              });
+           
+                                  
 		}
 		$("#downloadLinksDiv").toggleClass("hide");
 	});
@@ -960,15 +992,11 @@ ChartBuilder.start = function(config) {
 
 			ChartBuilder.setChartArea();
 
-			chart.resize().
-				setYScales()
+			chart.setYScales()
 				.setXScales()
-				.setLineMakers()
-				.setPadding();
+				.setLineMakers();
 
 			ChartBuilder.redraw();
-
-
 			ChartBuilder.inlineAllStyles();
 		}
   
@@ -1058,47 +1086,24 @@ ChartBuilder.start = function(config) {
 
 	$("#creditLine").keyup(function() {
 		var val = $(this).val();
-		chart.credit(val)
+		chart.credit(val);
 		chart.creditElement().text(chart.credit());
-
-		chart.resize();
-		chart.redraw();
-
-		chart.setPadding();
-
-		ChartBuilder.setChartArea();
-		chart.resize();
-		chart.redraw();
 	});
 
 	$("#sourceLine").keyup(function() {
 		var val = $(this).val();
 		chart.source(val);
 		chart.sourceElement().text(chart.source());
-
-		chart.resize();
-		chart.redraw();
-
-		chart.setPadding();
-
-		ChartBuilder.setChartArea();
-		chart.resize();
-		chart.redraw();
 	});
 
 	$("#chart_title").keyup(function() {
 		var val = $(this).val();
 		chart.title(val);
-
-		ChartBuilder.setChartArea();
 		chart.resize()
-			.setPadding()
-
+			.setPadding();
 		ChartBuilder.setChartArea();
-
-		chart.resize()
+		chart.setYScales()
 			.redraw();
-
 		ChartBuilder.makeLegendAdjustable();
 
 		chart.titleElement().text(chart.title());
@@ -1108,19 +1113,10 @@ ChartBuilder.start = function(config) {
 		$("#downloadLinksDiv").toggleClass("hide");
 	});
 
-	$("#chart_size").change(function() {
-  		$("#chartContainer").attr("class",$(this).val())
-  		$("#chartContainer").css("height","").attr("height","")
-
-  		chart.resize()
-  		chart.redraw()
-
-  		ChartBuilder.setChartArea();
-		chart.resize();
-		chart.redraw();
-  	})
-
 	//store the decimal and thousands separators
 	ChartBuilder.separators = ChartBuilder.determineLocaleNumberSeps();
+                    
+                    
 
   });
+};
