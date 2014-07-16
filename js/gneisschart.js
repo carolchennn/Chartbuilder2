@@ -2033,9 +2033,51 @@ function Gneiss(config)
 		return this;
 	};
   
-  this.updateMetaAndTitle = function Gneiss$updateMetaAndTitle() {
+   this.updateMetaAndTitle = function Gneiss$updateMetaAndTitle() {
+  		/*
+			Position the source and title elements appropriately
+  		*/
+
 		var g = this;
-		g.footerElement().attr("transform","translate(0," + (g.height() - g.footerMargin()) + ")");
+
+		var creditBBox;
+
+		//the default values for the source element
+		var sourceElementX = g.width() - g.defaultPadding().right;;
+		var sourceElementDY = 0;
+		var sourceElementTA = "end"
+
+		//the default values for the credit element
+		var creditElementX = g.defaultPadding().left;
+
+		//place the footer elements in the right place
+
+		//test if the text elements are overlapping
+		creditBBox =  g.creditElement()[0][0].getBoundingClientRect()
+
+		var isOverlapping = sourceElementX - g.sourceElement()[0][0].getBoundingClientRect().width < creditBBox.width + creditBBox.left + 15
+
+		if(isOverlapping) {
+			//if they're overlapping stack the elements and align left
+			sourceElementDY = "1.4em";
+			sourceElementX = g.defaultPadding().left;
+			sourceElementTA = "start"
+		}
+
+		//update the source element with the propper values
+		g.sourceElement()
+			.attr("x", sourceElementX)
+			.attr("dy", sourceElementDY)
+			.attr("text-anchor", sourceElementTA)
+			.text(g.source())
+			.call(Gneiss.helper.wrap, g.width()-g.defaultPadding().left-g.defaultPadding().right);
+
+		g.creditElement().text(g.credit())
+			.attr("x",creditElementX);
+
+		g.footerElement().attr("transform", "translate(0," + (g.height() - g.footerMargin() - (g.footerElement()[0][0].getBoundingClientRect().height - g.creditElement()[0][0].getBoundingClientRect().height)) + ")");
+
+
 		return this;
 	};
   
