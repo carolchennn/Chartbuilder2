@@ -257,7 +257,7 @@ Gneiss.helper = {
     var trans = elem.attr("transform").split(separator);
     return { x: (trans[0] ? parseFloat(trans[0].split("(")[1]) : 0), y: (trans[1] ? parseFloat(trans[1].split(")")[0] ): 0) };
   },
-  wrap: function(text, size) {
+  wrap: function(text, width) {
 		//from http://bl.ocks.org/mbostock/7555321
 		text.each(function() {
 			var text = d3.select(this),
@@ -274,7 +274,7 @@ Gneiss.helper = {
 			while (word = words.pop()) {
 				line.push(word);
 				tspan.text(line.join(" "));
-				if (tspan.node().getComputedTextLength() > size) {
+				if (tspan.node().getComputedTextLength() > width) {
 					line.pop();
 					tspan.text(line.join(" "));
 					line = [word];
